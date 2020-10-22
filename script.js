@@ -4,12 +4,12 @@
 // register the click from the button
 
 
-var button = document.querySelector(".btn.btn-primary")
+var button = document.querySelector(".button")
 var questionContainer = document.querySelector("#question-container")
 
 const questionElement = document.querySelector("#question")
 const answerButtons = document.querySelector("#answer-buttons")
-// let shuffledQuestions, currentQuestionIndex
+let currentQuestionIndex
 
 button.addEventListener("click", start)
 
@@ -17,19 +17,44 @@ function start() {
     setTimer()
     console.log("button click")
     button.parentElement.innerHTML = "";
-    // shuffledQuestions = questions.sort(() => Math.random() - .5)
-    // currentQuestionIndex = 0
+    currentQuestionIndex = 0
     questionContainer.classList.remove("hide")
-    NextQuestion()
+    nextQuestion()
 
 }
+
+// timer that counts down, decreases with every incorrect answer
+//     timer on the left hand side
+//     decrement time
+
+var timeLeft = document.querySelector("#timer")
+var secondsRemaining = 91
+
+ // quiz starts // 1st question and answers come up // timer starts
+
+ // timer begins on start
+function setTimer() {
+    var secondsLeft = setInterval(function() {
+        secondsRemaining--;
+        timeLeft.textContent = "Time: " + secondsRemaining;
+
+        if(secondsRemaining ===0) {
+            clearInterval(secondsLeft);
+            // send message?
+        }
+    },1000);
+}
+
 function nextQuestion() {
     resetState()
-    // btn.addEventListener("click", () => {
-        
-    // })
-    showQuestion()
+    showQuestion(questions[currentQuestionIndex])
 }
+
+// Multiple choice questions one at a time
+//     print on the screen a question with 4 multiple choice answers
+//     each answer should be a button
+//     answers appear in a list under the question
+
 function showQuestion(question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
@@ -45,9 +70,9 @@ function showQuestion(question) {
 }
 
 function resetState() {
+    clearStatusClass(document.body)
     while(answerButtons.firstChild) {
-        answerButtons.removeChild
-        (answerButtons.firstChild)
+        answerButtons.removeChild(answerButtons.firstChild)
     }
 }
 
@@ -58,6 +83,11 @@ function selectAnswer(e) {
     Array.from(answerButtons.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })  
+    answerButtons.addEventListener("click", () => {
+        console.log("next question")
+        currentQuestionIndex++
+        nextQuestion()
+    })
 }
 
 function setStatusClass(element, correct) {
@@ -67,112 +97,91 @@ function setStatusClass(element, correct) {
     } else {
         element.classList.add("wrong")
         }
-    currentQuestionIndex++
-    nextQuestion()
     }
 
-function clearStatusClass(element) {
-    element.classList.remove("correct")
-    element.classlist.remove("wrong")
-}
-
-//     // timer begins
-    
-//     
-// // quiz starts // 1st question and answers come up // timer starts
-//     var btn1 = document.createElement("answer1")
-//     btn1.innerHTML = ""
-//     document.body.append(btn1)
-//     question.textContent = question1.question;
-//     wrong1.textContent = question1.wrong1;
-//     wrong2.textContent = question1.wrong2;
-//     wrong3.textContent = question1.wrong3;
-//     right.textContent = question1.right;
-// })
-
-// var question = document.querySelector("#question")
-// var questions = [question1, question2, question3]
-// var theQuiz = document.querySelector("#quiz")
-
-// function renderQuestions (){
-//     // question.innerHTML = "";
-
-//     // render a new list for each question
-//     for (var i = 0; i < 10; i++) {
-//         var question = questions[i];
-
-//     var li = document.createElement("li");
-//     li.textContent = question;
-//     li.setAttribute("q-and-a", i);
-
-//     var button = document.createElement("button");
-//     button.textContent = question1.question;
-
-//     li.append(button);
-//     theQuiz.append(li);
-//     }
-// }
-
-
-// Multiple choice questions one at a time
-//     print on the screen a question with 4 multiple choice answers
-//     each answer should be a button
-//     NOTE: need to decide how to print on the screen
-//     answers appear in a list under the question
-
+    function clearStatusClass(element) {
+        element.classList.remove("correct")
+        element.classList.remove("wrong")
+      }
 
 const questions = [
     {
     question: "What are the three base languages of coding?",
     answers: [
-        {text: "html, css, JavaScript", correct: true},
-        {text: "html, qwerty, JavaScript", correct: false},
-        {text: "jquery, bootstrap, html", correct: false},
-        {text: "css, pdf, ruby", correct: false}
-
+        { text: "html, css, JavaScript", correct: true},
+        { text: "html, qwerty, JavaScript", correct: false},
+        { text: "jquery, bootstrap, html", correct: false},
+        { text: "css, pdf, ruby", correct: false}
         ]
     },
     {
-    question: "What is blah blah",
+    question: "In JavaScript, what element is used to store and manipulate text usually in multiples?",
     answers: [
-        {text: "wrong answer 1", correct: false},
-        {text: "wrong answer 2", correct: false},
-        {text: "wrong answer 3", correct: false},
-        {text: "right answer", correct: true},
-    ]}
+        { text: "Arrays", correct: false},
+        { text: "Function", correct: false},
+        { text: "Strings", correct: true},
+        { text: "Variables", correct: false},
+    ]
+    },
+    {
+    question: "What is the element used – and hidden – in code that explains things and makes the content more readable?",
+    answers: [
+        { text: "Notes", correct: false},
+        { text: "Comments", correct: true},
+        { text: "Quotations", correct: false},
+        { text: "Comparisons", correct: false},
+    ]
+    },
+    {
+    question: "What is a JavaScript element that represents either TRUE or FALSE values?",
+    answers: [
+        { text: "Event", correct: false},
+        { text: "RegExp", correct: false},
+        { text: "Condition", correct: false},
+        { text: "Boolean", correct: true},
+    ]
+    },
+    {
+    question: "What is the mathematical operator for not equal to?",
+    answers: [
+        { text: "/=", correct: false},
+        { text: "=|=", correct: false},
+        { text: "!=", correct: true},
+        { text: "<=>", correct: false},
+    ]
+    },
+    {
+    question: "We use 'prompt' to:",
+    answers: [
+        { text: "return a user input", correct: true},
+        { text: "return a true or false", correct: false},
+        { text: "tell the user they did something incorrect", correct: false},
+        { text: "send a message to the user", correct: false},
+    ]
+    },
+    {
+    question: "What is the selector for 'class'?",
+    answers: [
+        { text: "$", correct: false},
+        { text: ".", correct: true},
+        { text: "#", correct: false},
+        { text: "!", correct: false},
+    ]
+    },
+    {
+    question: "We use _____ to retrieve data in an input field.",
+    answers: [
+        { text: ".getInput", correct: false},
+        { text: ".retrieveData", correct: false},
+        { text: ".value", correct: true},
+        { text: ".inputData", correct: false},
+    ]
+    }
 ]
-
-// var question3 = {
-//     wrong1 : "wrong answer 1",
-//     wrong2 : "wrong answer 2",
-//     wrong3 : "wrong answer 3",
-//     right : "right answer"
-// };
-
-// timer that counts down, decreases with every incorrect answer
-//     timer on the left hand side
-//     decrement time
-
-var timeLeft = document.querySelector("#timer")
-var secondsRemaining = 91
-
-function setTimer() {
-    var secondsLeft = setInterval(function() {
-        secondsRemaining--;
-        timeLeft.textContent = "Time: " + secondsRemaining;
-
-        if(secondsRemaining ===0) {
-            clearInterval(secondsLeft);
-            // send message?
-        }
-    },1000);
-}
 
 // tracks high scores
 //     save scores to local storage
 
 // enter initials at the end to save your score
-//     input field for initials that save to local
-
-// renderQuestions()
-// var submitButton = document.createElement()
+    // input field for initials that save to local
+// */ /*

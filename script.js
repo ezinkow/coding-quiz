@@ -6,31 +6,30 @@
 
 var button = document.querySelector(".btn.btn-primary")
 var questionContainer = document.querySelector("#question-container")
-var wrong1 = document.querySelector("#wrong1")
-var wrong2 = document.querySelector("#wrong2")
-var wrong3 = document.querySelector("#wrong3")
-var right = document.querySelector("#right")
 
 const questionElement = document.querySelector("#question")
 const answerButtons = document.querySelector("#answer-buttons")
-let shuffledQuestions, currentQuestionIndex
+// let shuffledQuestions, currentQuestionIndex
 
 button.addEventListener("click", start)
 
 function start() {
+    setTimer()
     console.log("button click")
     button.parentElement.innerHTML = "";
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
-    currentQuestionIndex = 0
-    setTimer()
+    // shuffledQuestions = questions.sort(() => Math.random() - .5)
+    // currentQuestionIndex = 0
     questionContainer.classList.remove("hide")
-    nextQuestion()
+    NextQuestion()
+
 }
 function nextQuestion() {
     resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
+    // btn.addEventListener("click", () => {
+        
+    // })
+    showQuestion()
 }
-
 function showQuestion(question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
@@ -46,7 +45,10 @@ function showQuestion(question) {
 }
 
 function resetState() {
-    
+    while(answerButtons.firstChild) {
+        answerButtons.removeChild
+        (answerButtons.firstChild)
+    }
 }
 
 function selectAnswer(e) {
@@ -65,8 +67,15 @@ function setStatusClass(element, correct) {
     } else {
         element.classList.add("wrong")
         }
+    currentQuestionIndex++
+    nextQuestion()
     }
-//     
+
+function clearStatusClass(element) {
+    element.classList.remove("correct")
+    element.classlist.remove("wrong")
+}
+
 //     // timer begins
     
 //     
@@ -116,22 +125,22 @@ const questions = [
     {
     question: "What are the three base languages of coding?",
     answers: [
-        {text: "html, css, JavaScript", correct: true },
-        {text: "html, qwerty, JavaScript", correct: false}
-    // wrong1 : ,
-    // wrong2 : "jquery, bootstrap, html",
-    // wrong3 : "css, pdf, ruby",
-    // right : "html, css, JavaScript"
-        ]
-    }
-]
+        {text: "html, css, JavaScript", correct: true},
+        {text: "html, qwerty, JavaScript", correct: false},
+        {text: "jquery, bootstrap, html", correct: false},
+        {text: "css, pdf, ruby", correct: false}
 
-// var question2 = {
-//     wrong1 : "wrong answer 1",
-//     wrong2 : "wrong answer 2",
-//     wrong3 : "wrong answer 3",
-//     right : "right answer"
-// };
+        ]
+    },
+    {
+    question: "What is blah blah",
+    answers: [
+        {text: "wrong answer 1", correct: false},
+        {text: "wrong answer 2", correct: false},
+        {text: "wrong answer 3", correct: false},
+        {text: "right answer", correct: true},
+    ]}
+]
 
 // var question3 = {
 //     wrong1 : "wrong answer 1",
@@ -145,7 +154,7 @@ const questions = [
 //     decrement time
 
 var timeLeft = document.querySelector("#timer")
-var secondsRemaining = 90
+var secondsRemaining = 91
 
 function setTimer() {
     var secondsLeft = setInterval(function() {
@@ -159,7 +168,6 @@ function setTimer() {
     },1000);
 }
 
-timeLeft.setAttribute("style", "text-align: right; font-size:40px; margin-right: 20px; color: blue; width: auto")
 // tracks high scores
 //     save scores to local storage
 
@@ -168,4 +176,3 @@ timeLeft.setAttribute("style", "text-align: right; font-size:40px; margin-right:
 
 // renderQuestions()
 // var submitButton = document.createElement()
-

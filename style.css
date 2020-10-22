@@ -1,3 +1,59 @@
 .hide {
     display: none;
 }
+
+
+.container {
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.btn {
+    color: white;
+    background-color: blue;
+    width: auto;
+    text-align: center;
+    /* margin-left: 120px;
+    margin-right: 120px; */
+    font-weight: bold;
+}
+
+.btn-grid {
+    display: grid;
+    gap: 5px;
+    margin-top: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+
+}
+
+
+
+#timer {
+    text-align: right;
+    font-size: 40px;
+    margin-right: 20px;
+    color: red;
+    width: "auto";
+}
+
+.btn.correct {
+    color: black;
+    font-weight: bold;
+    background-color: green;
+}
+
+.btn.wrong {
+    background-color: red;
+}
+
+.btn.hover {
+    border-color: black;
+}

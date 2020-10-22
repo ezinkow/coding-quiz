@@ -4,36 +4,28 @@
 // register the click from the button
 
 
-var button = document.querySelector(".button")
+var startButton = document.querySelector(".btn.btn-primary")
 var questionContainer = document.querySelector("#question-container")
-
+var container = document.querySelector(".container")
 const questionElement = document.querySelector("#question")
 const answerButtons = document.querySelector("#answer-buttons")
+var scoreDisplay = document.querySelector("#display-score")
+var saveScore = document.querySelector("#save-score")
+var submit = document.querySelector("#submit-button")
+var initialsInput = document.querySelector("#initials")
+
 let currentQuestionIndex
+let countRightAnswers = 0
 
-button.addEventListener("click", start)
-
-function start() {
-    setTimer()
-    console.log("button click")
-    button.parentElement.innerHTML = "";
-    currentQuestionIndex = 0
-    questionContainer.classList.remove("hide")
-    nextQuestion()
-
-}
+startButton.addEventListener("click", start)
 
 // timer that counts down, decreases with every incorrect answer
-//     timer on the left hand side
 //     decrement time
 
 var timeLeft = document.querySelector("#timer")
 var secondsRemaining = 91
-
- // quiz starts // 1st question and answers come up // timer starts
-
  // timer begins on start
-function setTimer() {
+ function setTimer() {
     var secondsLeft = setInterval(function() {
         secondsRemaining--;
         timeLeft.textContent = "Time: " + secondsRemaining;
@@ -44,6 +36,18 @@ function setTimer() {
         }
     },1000);
 }
+function start() {
+    setTimer();
+    startButton.parentElement.innerHTML = "";
+    currentQuestionIndex = 0
+    questionContainer.classList.remove("hide")
+    container.classList.remove("hide")
+    scoreDisplay.classList.remove("hide")
+    nextQuestion()
+
+}
+
+ // quiz starts // 1st question and answers come up // timer starts
 
 function nextQuestion() {
     resetState()
@@ -64,16 +68,27 @@ function showQuestion(question) {
         if (answer.correct) {
             button.dataset.correct = answer.correct
         }
-        button.addEventListener("click", selectAnswer)
+        button.addEventListener('click', selectAnswer)
         answerButtons.appendChild(button)
-    })
-}
+
+        })
+        console.log("Show question")
+
+        // answerButtons.addEventListener("click", () => {
+        //     console.log("next question")
+        //     currentQuestionIndex++
+        //     nextQuestion()
+        // }
+        // )
+    }
+    
 
 function resetState() {
     clearStatusClass(document.body)
     while(answerButtons.firstChild) {
         answerButtons.removeChild(answerButtons.firstChild)
     }
+    console.log("reset state")
 }
 
 function selectAnswer(e) {
@@ -81,14 +96,44 @@ function selectAnswer(e) {
     const correct = selectedButton.dataset.correct
     setStatusClass(document.body, correct)
     Array.from(answerButtons.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })  
-    answerButtons.addEventListener("click", () => {
-        console.log("next question")
-        currentQuestionIndex++
-        nextQuestion()
+      setStatusClass(button, button.dataset.correct)
     })
+
+    if (selectedButton.dataset = correct) {
+    countRightAnswers++;
+    scoreDisplay.innerHTML = "Score: " + countRightAnswers;
+    }
+        else if (selectedButton.dataset = "wrong") {
+            scoreDisplay.innerHTML = "Score: " + countRightAnswers;
+        }
+        console.log("select answer")
+        
+    if (questions.length === currentQuestionIndex + 1) {
+        enterScore();
+    }
+    
+    // console.log(saveScores)
+    
+    var saveScores = {
+        initials: initialsInput.value.trim(),
+        score: countRightAnswers}
+
+    function enterScore () {
+        questionContainer.classList.add("hide")
+        timeLeft.classList.add("hide")
+        saveScore.classList.remove("hide")
+        submit.addEventListener("click",function() {
+            localStorage.setItem("Scores",JSON.stringify(saveScores));
+        })
+    }
 }
+
+answerButtons.addEventListener("click", () => {
+    currentQuestionIndex++
+    nextQuestion();
+})
+
+
 
 function setStatusClass(element, correct) {
     clearStatusClass(element)
@@ -97,11 +142,13 @@ function setStatusClass(element, correct) {
     } else {
         element.classList.add("wrong")
         }
+        console.log("set status class")
     }
 
     function clearStatusClass(element) {
         element.classList.remove("correct")
         element.classList.remove("wrong")
+        console.log("clear status class")
       }
 
 const questions = [
@@ -109,7 +156,7 @@ const questions = [
     question: "What are the three base languages of coding?",
     answers: [
         { text: "html, css, JavaScript", correct: true},
-        { text: "html, qwerty, JavaScript", correct: false},
+        { text: "span, qwerty, div", correct: false},
         { text: "jquery, bootstrap, html", correct: false},
         { text: "css, pdf, ruby", correct: false}
         ]

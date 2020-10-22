@@ -11,15 +11,12 @@
     <title>Coding Quiz</title>
 </head>
 <body>
-    
-    <!-- <div id="quiz"></div>
-    <div>
-    </div> -->
+  
     <div id="timer"></div>
-      <div class = "container">
-        <div class = "controls">
-          <button class="button">Start the Quiz!</button>
-        </div>
+    <div class = "controls">
+      <button type="button" class="btn btn-primary">Start The Quiz!</button>
+    </div>
+      <div class ="container hide">
       <div id="question-container" class="hide">
         <div id="question">Question</div>
         <div id="answer-buttons" class="btn-grid">
@@ -29,17 +26,16 @@
           <button class="btn">Answer 4</button>
         </div>
       </div>
-      
+      <div id="save-score" class="hide">
+        <label for="initials">Enter Initials:</label>
+        <input type=text id="initials">
+        <input type="submit" value="Submit" id="submit-button">
+      </div>
     </div>
-      
-    <!-- 
-    
-      <div id="wrong1"></div>
-      <div id="wrong2"></div>
-      <div id="wrong3"></div>
-      <div id="right"></div> -->
-    
-    
+ 
+      <div id="display-score" class="hide">Score: 0</div>
+
+
 
   <script src="./script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -1,8 +1,33 @@
+/* *, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Gotham Rounded;
+  } */
+
 .hide {
     display: none;
 }
 
+.btn.btn-primary {
+    margin: 0;
+    padding: 30px !important;
+    position: absolute;
+    left: 45%;
+    top: 25%;
+    font-size: larger !important;
+}
 
+#timer {
+    font-size: 40px;
+    color: red;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#display-score {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 50px;
+}
 .container {
     width: 800px;
     max-width: 80%;
@@ -13,6 +38,8 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 70px;
+    text-align: center;
 }
 
 .btn {
@@ -34,16 +61,11 @@
 
 }
 
-
-
-#timer {
-    text-align: right;
-    font-size: 40px;
-    margin-right: 20px;
-    color: red;
-    width: "auto";
-}
-
 .btn.hover {
     border-color: black;
+}
+
+#saveScore {
+    text-align:center;
+    
 }

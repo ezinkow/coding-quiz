@@ -16,6 +16,7 @@ var initialsInput = document.querySelector("#initials")
 
 let currentQuestionIndex
 let countRightAnswers = 0
+var saveHighUserScore = {}
 
 startButton.addEventListener("click", start)
 
@@ -73,13 +74,6 @@ function showQuestion(question) {
 
         })
         console.log("Show question")
-
-        // answerButtons.addEventListener("click", () => {
-        //     console.log("next question")
-        //     currentQuestionIndex++
-        //     nextQuestion()
-        // }
-        // )
     }
     
 
@@ -112,28 +106,30 @@ function selectAnswer(e) {
         enterScore();
     }
     
-    // console.log(saveScores)
-    
-    var saveScores = {
-        initials: initialsInput.value.trim(),
-        score: countRightAnswers}
+    // save high score
+    // save score to local storage
 
     function enterScore () {
         questionContainer.classList.add("hide")
         timeLeft.classList.add("hide")
         saveScore.classList.remove("hide")
-        submit.addEventListener("click",function() {
-            localStorage.setItem("Scores",JSON.stringify(saveScores));
-        })
+// enter initials at the end to save your score
+        submit.addEventListener("click",function(event) {
+            saveHighUserScore = {
+                initials: initialsInput.value.trim(),
+                score: countRightAnswers
+            }
+            event.preventDefault()
+            localStorage.setItem("Scores",JSON.stringify(saveHighUserScore));
+        }
+        )
     }
 }
 
-answerButtons.addEventListener("click", () => {
+answerButtons.addEventListener("click", function() {
     currentQuestionIndex++
     nextQuestion();
 })
-
-
 
 function setStatusClass(element, correct) {
     clearStatusClass(element)
@@ -225,10 +221,3 @@ const questions = [
     ]
     }
 ]
-
-// tracks high scores
-//     save scores to local storage
-
-// enter initials at the end to save your score
-    // input field for initials that save to local
-// */ /*

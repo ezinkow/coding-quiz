@@ -3,17 +3,33 @@
 }
 
 .btn.btn-primary {
-    margin: 0;
-    padding: 30px !important;
-    position: absolute;
-    left: 34%;
-    top: 25%;
-    font-size: 50px !important;
+    width: 500px;
+    margin: 0 auto;
+    display: block;
+    height: 200px;
+    margin-top: 30px;
+    font-size: 50px;
 }
 
-h2 {
+h2, p {
     text-align: center;
-    
+    font-size: large;
+    font-weight: bold;
+    color: red;
+    }
+
+.btn.btn-success {
+    margin-top: 30px;
+}
+
+.submit-button {
+    color: darkslategrey;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+#initials {
+    width: 75px;
 }
 
 #timer {
@@ -30,11 +46,19 @@ h2 {
     margin-top: 50px;
 }
 
-#display-score {
+#question-number {
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
+    color: blue;
 }
+
+#display-score {
+    font-size: 50px;
+    text-align: center;
+    color: red;
+}
+
 .container {
     width: 800px;
     max-width: 80%;

@@ -10,14 +10,13 @@ var container = document.querySelector(".container")
 const questionElement = document.querySelector("#question")
 const answerButtons = document.querySelector("#answer-buttons")
 var scoreDisplay = document.querySelector("#display-score")
+var questionDisplay = document.querySelector("#question-number")
 var saveScore = document.querySelector("#save-score")
-var submit = document.querySelector("#submit-button")
+var submit = document.querySelector(".submit-button")
 var initialsInput = document.querySelector("#initials")
 var restartButton = document.querySelector("#restart")
 var timeLeft = document.querySelector("#timer")
 var secondsRemaining = 91
-var t
-var count
 let currentQuestionIndex = 0
 let countRightAnswers = 0
 
@@ -28,16 +27,13 @@ let countRightAnswers = 0
 startButton.addEventListener("click", start)
  // timer begins on start
  function setTimer() {
-        clearTimeout(secondsRemaining)
-        secondsRemaining = 91
-        var secondsLeft = secondsRemaining
         var secondsLeft = setInterval(function() {
         secondsRemaining--;
         timeLeft.textContent = "Time: " + secondsRemaining;
 
-        if(secondsRemaining ===0) {
+        if(secondsRemaining === 0) {
             clearInterval(secondsLeft);
-            // send message?
+            enterScore();
         }
     },1000);
 }
@@ -49,6 +45,7 @@ function start() {
     questionContainer.classList.remove("hide")
     container.classList.remove("hide")
     scoreDisplay.classList.remove("hide")
+    questionDisplay.classList.remove("hide")
     nextQuestion()
 
 }
@@ -79,6 +76,9 @@ function showQuestion(question) {
 
         })
         console.log("Show question")
+
+    var questionNumber = currentQuestionIndex + 1
+    questionDisplay.innerText = "Question " + (questionNumber) + "/10"
     }
     
 
@@ -87,7 +87,9 @@ function resetState() {
     while(answerButtons.firstChild) {
         answerButtons.removeChild(answerButtons.firstChild)
     }
-    console.log("reset state")
+    // end of quiz, start function to allow user to enter initials
+    if (questions.length === currentQuestionIndex + 1) {
+        enterScore();}
 }
 
 function selectAnswer(e) {
@@ -101,17 +103,13 @@ function selectAnswer(e) {
     if (selectedButton.dataset = correct) {
     // Keep score for correct answers
     countRightAnswers++;
-    scoreDisplay.innerHTML = "Score: " + countRightAnswers;
+    scoreDisplay.innerHTML = "Score: " + countRightAnswers + "/10";
     }
         else if (selectedButton.dataset = "wrong") {
-            scoreDisplay.innerHTML = "Score: " + countRightAnswers;
+            scoreDisplay.innerHTML = "Score: " + countRightAnswers + "/10";
     // Decrement 10 seconds for wrong answer
             secondsRemaining = secondsRemaining - 10
         }
-        
-        // end of quiz, start function to allow user to enter initials
-    if (questions.length === currentQuestionIndex + 1) {
-        enterScore();
     }
     
     // save high score to local storage
@@ -119,6 +117,7 @@ function selectAnswer(e) {
     function enterScore () {
         questionContainer.classList.add("hide")
         timeLeft.classList.add("hide")
+        questionDisplay.classList.add("hide")
         saveScore.classList.remove("hide")
     // enter initials at the end to save your score
         submit.addEventListener("click",function(event) {
@@ -129,21 +128,10 @@ function selectAnswer(e) {
             event.preventDefault()
             localStorage.setItem("Scores",JSON.stringify(saveHighUserScore));
             restartButton.classList.remove("hide")
-        })}
-        restartButton.addEventListener("click", function() {
-            // clearTimeout(secondsRemaining)
-            // secondsRemaining = 91
-            countRightAnswers = 0
-            restartButton.classList.add("hide")
-            saveScore.classList.add("hide")
-            timeLeft.classList.remove("hide")
-            questionContainer.classList.remove("hide")
-            container.classList.remove("hide")
-            scoreDisplay.classList.remove("hide")
-            clearStatusClass(element)
-            start();
         })
-        console.log(restartButton)
+        restartButton.addEventListener("click", function() {
+            location.reload()
+        })
     }
 
 
@@ -249,6 +237,33 @@ const questions = [
         { text: ".retrieveData", correct: false},
         { text: ".value", correct: true},
         { text: ".inputData", correct: false},
+    ]
+    },
+    {
+    question: "2We use _____ to retrieve data in an input field.",
+    answers: [
+        { text: ".getInput", correct: false},
+        { text: ".retrieveData", correct: false},
+        { text: ".value", correct: true},
+        { text: ".inputData", correct: false},
+    ]
+    },
+    {
+    question: "This is the end of the quiz",
+    answers: [
+        { text: "answer", correct: false},
+        { text: "answer", correct: false},
+        { text: "answer", correct: true},
+        { text: "answer", correct: false},
+    ]
+    },
+    {
+    question: "2This is the end of the quiz",
+    answers: [
+        { text: "answer", correct: false},
+        { text: "answer", correct: false},
+        { text: "answer", correct: true},
+        { text: "answer", correct: false},
     ]
     }
 ]

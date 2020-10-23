@@ -3,7 +3,7 @@
 
 // register the click from the button
 
-
+var controls = document.querySelector(".controls")
 var startButton = document.querySelector(".btn.btn-primary")
 var questionContainer = document.querySelector("#question-container")
 var container = document.querySelector(".container")
@@ -13,21 +13,25 @@ var scoreDisplay = document.querySelector("#display-score")
 var saveScore = document.querySelector("#save-score")
 var submit = document.querySelector("#submit-button")
 var initialsInput = document.querySelector("#initials")
-
-let currentQuestionIndex
+var restartButton = document.querySelector("#restart")
+var timeLeft = document.querySelector("#timer")
+var secondsRemaining = 91
+var t
+var count
+let currentQuestionIndex = 0
 let countRightAnswers = 0
-var saveHighUserScore = {}
 
-startButton.addEventListener("click", start)
+
 
 // timer that counts down, decreases with every incorrect answer
 //     decrement time
-
-var timeLeft = document.querySelector("#timer")
-var secondsRemaining = 91
+startButton.addEventListener("click", start)
  // timer begins on start
  function setTimer() {
-    var secondsLeft = setInterval(function() {
+        clearTimeout(secondsRemaining)
+        secondsRemaining = 91
+        var secondsLeft = secondsRemaining
+        var secondsLeft = setInterval(function() {
         secondsRemaining--;
         timeLeft.textContent = "Time: " + secondsRemaining;
 
@@ -37,9 +41,10 @@ var secondsRemaining = 91
         }
     },1000);
 }
+
 function start() {
     setTimer();
-    startButton.parentElement.innerHTML = "";
+    controls.classList.add("hide")
     currentQuestionIndex = 0
     questionContainer.classList.remove("hide")
     container.classList.remove("hide")
@@ -94,26 +99,28 @@ function selectAnswer(e) {
     })
 
     if (selectedButton.dataset = correct) {
+    // Keep score for correct answers
     countRightAnswers++;
     scoreDisplay.innerHTML = "Score: " + countRightAnswers;
     }
         else if (selectedButton.dataset = "wrong") {
             scoreDisplay.innerHTML = "Score: " + countRightAnswers;
+    // Decrement 10 seconds for wrong answer
+            secondsRemaining = secondsRemaining - 10
         }
-        console.log("select answer")
         
+        // end of quiz, start function to allow user to enter initials
     if (questions.length === currentQuestionIndex + 1) {
         enterScore();
     }
     
-    // save high score
-    // save score to local storage
+    // save high score to local storage
 
     function enterScore () {
         questionContainer.classList.add("hide")
         timeLeft.classList.add("hide")
         saveScore.classList.remove("hide")
-// enter initials at the end to save your score
+    // enter initials at the end to save your score
         submit.addEventListener("click",function(event) {
             saveHighUserScore = {
                 initials: initialsInput.value.trim(),
@@ -121,14 +128,38 @@ function selectAnswer(e) {
             }
             event.preventDefault()
             localStorage.setItem("Scores",JSON.stringify(saveHighUserScore));
-        }
-        )
+            restartButton.classList.remove("hide")
+        })}
+        restartButton.addEventListener("click", function() {
+            // clearTimeout(secondsRemaining)
+            // secondsRemaining = 91
+            countRightAnswers = 0
+            restartButton.classList.add("hide")
+            saveScore.classList.add("hide")
+            timeLeft.classList.remove("hide")
+            questionContainer.classList.remove("hide")
+            container.classList.remove("hide")
+            scoreDisplay.classList.remove("hide")
+            clearStatusClass(element)
+            start();
+        })
+        console.log(restartButton)
     }
-}
 
-answerButtons.addEventListener("click", function() {
-    currentQuestionIndex++
-    nextQuestion();
+
+
+// function restart() {
+
+
+//     // setTimer();
+    
+   
+
+// }
+
+    answerButtons.addEventListener("click", function() {
+        currentQuestionIndex++
+        nextQuestion();
 })
 
 function setStatusClass(element, correct) {

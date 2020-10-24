@@ -37,7 +37,8 @@ startButton.addEventListener("click", start)
         }
     },1000);
 }
-
+    //start button to start quiz
+    // quiz starts // 1st question and answers come up // timer starts
 function start() {
     setTimer();
     controls.classList.add("hide")
@@ -50,21 +51,19 @@ function start() {
 
 }
 
- // quiz starts // 1st question and answers come up // timer starts
-
+    // get to next question
 function nextQuestion() {
     resetState()
     showQuestion(questions[currentQuestionIndex])
 }
 
+// Show questions and make buttons for answers
 // Multiple choice questions one at a time
-//     print on the screen a question with 4 multiple choice answers
-//     each answer should be a button
-//     answers appear in a list under the question
 
 function showQuestion(question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
+        //     Make each answer a button
         const button = document.createElement("button")
         button.innerText = answer.text
         button.classList.add("btn")
@@ -75,13 +74,13 @@ function showQuestion(question) {
         answerButtons.appendChild(button)
 
         })
-        console.log("Show question")
 
     var questionNumber = currentQuestionIndex + 1
     questionDisplay.innerText = "Question " + (questionNumber) + "/10"
     }
     
 
+// reset right and wrong answers every question
 function resetState() {
     clearStatusClass(document.body)
     while(answerButtons.firstChild) {
@@ -99,12 +98,12 @@ function selectAnswer(e) {
     Array.from(answerButtons.children).forEach(button => {
       setStatusClass(button, button.dataset.correct)
     })
-
     if (selectedButton.dataset = correct) {
     // Keep score for correct answers
     countRightAnswers++;
     scoreDisplay.innerHTML = "Score: " + countRightAnswers + "/10";
     }
+    // mark answers if wrong
         else if (selectedButton.dataset = "wrong") {
             scoreDisplay.innerHTML = "Score: " + countRightAnswers + "/10";
     // Decrement 10 seconds for wrong answer
@@ -113,7 +112,6 @@ function selectAnswer(e) {
     }
     
     // save high score to local storage
-
     function enterScore () {
         questionContainer.classList.add("hide")
         timeLeft.classList.add("hide")
@@ -129,27 +127,19 @@ function selectAnswer(e) {
             localStorage.setItem("Scores",JSON.stringify(saveHighUserScore));
             restartButton.classList.remove("hide")
         })
+        //start quiz over
         restartButton.addEventListener("click", function() {
             location.reload()
         })
     }
 
-
-
-// function restart() {
-
-
-//     // setTimer();
-    
-   
-
-// }
-
+        // make clicking on an answer move to next question
     answerButtons.addEventListener("click", function() {
         currentQuestionIndex++
         nextQuestion();
 })
 
+    //adding class right or wrong to answers
 function setStatusClass(element, correct) {
     clearStatusClass(element)
     if (correct) {
@@ -157,15 +147,14 @@ function setStatusClass(element, correct) {
     } else {
         element.classList.add("wrong")
         }
-        console.log("set status class")
     }
 
     function clearStatusClass(element) {
         element.classList.remove("correct")
         element.classList.remove("wrong")
-        console.log("clear status class")
       }
 
+    //questions and answers:
 const questions = [
     {
     question: "What are the three base languages of coding?",
@@ -240,25 +229,26 @@ const questions = [
     ]
     },
     {
-    question: "2We use _____ to retrieve data in an input field.",
+    question: "What is the terminal command to create a new file?",
     answers: [
-        { text: ".getInput", correct: false},
-        { text: ".retrieveData", correct: false},
-        { text: ".value", correct: true},
-        { text: ".inputData", correct: false},
+        { text: "mkfile", correct: false},
+        { text: "mkdir", correct: false},
+        { text: "tchfile", correct: false},
+        { text: "touch", correct: true},
     ]
     },
+    {
+    question: "What is Pseudocode?",
+    answers: [
+        { text: "Half-assing code", correct: false},
+        { text: "Plain language description of the code you will write", correct: true},
+        { text: "Getting through some of your code", correct: false},
+        { text: "Sham code", correct: false},
+    ]
+    },
+    //placeholder question to avoid error
     {
     question: "This is the end of the quiz",
-    answers: [
-        { text: "answer", correct: false},
-        { text: "answer", correct: false},
-        { text: "answer", correct: true},
-        { text: "answer", correct: false},
-    ]
-    },
-    {
-    question: "2This is the end of the quiz",
     answers: [
         { text: "answer", correct: false},
         { text: "answer", correct: false},

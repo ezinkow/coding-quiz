@@ -18,45 +18,11 @@ h2, p {
     color: red;
     }
 
-.btn.btn-success {
-    margin-top: 30px;
-}
-
-.submit-button {
-    color: darkslategrey;
-    border-radius: 10px;
-    margin-left: 20px;
-}
-
-#initials {
-    width: 75px;
-}
-
-#timer {
+    #timer {
     font-size: 40px;
     color: red;
     text-align: center;
     margin-top: 50px;
-}
-
-#new-timer {
-    font-size: 40px;
-    color: red;
-    text-align: center;
-    margin-top: 50px;
-}
-
-#question-number {
-    font-size: 50px;
-    text-align: center;
-    margin-top: 50px;
-    color: blue;
-}
-
-#display-score {
-    font-size: 50px;
-    text-align: center;
-    color: red;
 }
 
 .container {
@@ -71,6 +37,37 @@ h2, p {
     font-size: 20px;
     margin-top: 70px;
     text-align: center;
+}
+    
+.btn-success {
+    margin-top: 30px;
+}
+
+.btn.hover {
+    border-color: black;
+}
+
+#question-number {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 50px;
+    color: blue;
+}
+
+.submit-button {
+    color: darkslategrey;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+#initials {
+    width: 75px;
+}
+
+#display-score {
+    font-size: 50px;
+    text-align: center;
+    color: red;
 }
 
 .btn {
@@ -92,11 +89,6 @@ h2, p {
 
 }
 
-.btn.hover {
-    border-color: black;
-}
-
 #saveScore {
     text-align:center;
-
 }
